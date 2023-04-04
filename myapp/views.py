@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 from myapp.models import Podcast, Genre
 from myapp.forms import MP3UploadForm
 
+def index(request):
+    return render(request, 'index.html')
+
 def home(request):
     podcasts = Podcast.objects.all()
     return render(request, 'home.html', {'podcasts': podcasts})
@@ -27,3 +30,7 @@ def create_podcast(request):
     else:
         form = MP3UploadForm()
     return render(request, 'create_podcast.html', {'form': form})
+
+
+
+

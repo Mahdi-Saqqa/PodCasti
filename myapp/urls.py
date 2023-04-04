@@ -10,7 +10,8 @@ from django.conf.urls.static import static
 ]
 """
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.index),
+    path('home', views.home, name='home'),
     path('podcast/<int:podcast_id>/', views.podcast_detail, name='podcast_detail'),
     path('create_podcast/', views.create_podcast, name='create_podcast'),
 ]
