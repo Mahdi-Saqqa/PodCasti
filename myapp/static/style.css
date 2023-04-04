@@ -1,0 +1,73 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.logo {
+    width: 9.5em;
+}
+
+body,
+html {
+    margin: 0px;
+    padding: 0px;
+    background-color: #0E0E0E;
+}
+
+.login-box {
+    background-color: #010100;
+    border-radius: 4%;
+    width: 400px;
+    height: 388px;
+    margin: 250px auto;
+    position: relative;
+}
+
+.login-box h1 {
+    color: #FFFFFF;
+    margin: 0px 35px;
+    margin-bottom: 35px;
+    padding-top: 25px;
+}
+
+.login-box form input {
+    display: block;
+    border-radius: 4px;
+    width: 324px;
+    height: 50px;
+    margin-left: 35px;
+    margin-right: 41px;
+    margin-bottom: 24px;
+}
+
+#submit {
+    display: inline;
+    color: #010100;
+    background-color: #f8c246;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    width: 150px;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+}
+
+#pwdreset {
+    display: block;
+    color: #FFFFFF;
+    text-decoration: none;
+    margin: 20px 0px;
+    margin-left: 225px;
+}
+
+#register-button {
+    display: inline;
+    color: #010100;
+    background-color: #f8c246;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    width: 150px;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}

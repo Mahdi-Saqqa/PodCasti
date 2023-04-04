@@ -9,17 +9,29 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <style>
-    /* * {
+    * {
         background-color:  #0E0E0E;
-    } */
+        color: white;
+    }
+    .card-title {
+        color:white;
+    }
     .logo {
-        width: 7em;
+        width: 9.5em;
     }
     ul li {
         list-style: none;
     }
-    body {
-        width: 100vw; !important
+    i{
+        color: #f8c246;
+    }
+    .dropdown-toggle::after {
+        color: #f8c246;
+    }
+    .same-size{
+        object-fit: cover;
+        width: 100%;
+        aspect-ratio: 1/1;
     }
 </style>
 </head>
@@ -64,7 +76,7 @@
                             <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
                             <span class="d-none d-sm-inline mx-1">loser</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu- text-small shadow">
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                             <li><a class="dropdown-item" href="#">New</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -78,8 +90,8 @@
             </div>
             <div class="header">
                 <div class="row mt-4 align-items-center d-flex justify-content-evenly">
-                    <div class="col-md-4">
-                        <img class="logo" src="{% static 'images/podcasti.png' %}" alt="PodCasti logo">
+                    <div class="col-md-3">
+                        <img class="logo" src="{% static 'images/podcasti2.png' %}" alt="PodCasti logo">
                     </div>
                     <div class="col-md-3 text-center">
                         <div class="input-group">
@@ -87,8 +99,8 @@
                         </div>
                     </div>
                     <div class="col-md-4 d-flex justify-content-end">
-                            <a class="btn btn-outline-dark rounded-pill" href="#">Login</a>
-                            <a class="btn btn-dark rounded-pill ms-2" href="#">Register</a>
+                            <a class="btn btn-outline-light rounded-pill" href="#">Login</a>
+                            <a class="btn btn-light rounded-pill ms-2" href="#">Register</a>
                     </div>
                 </div>
                 <div class="container d-flex">
@@ -96,65 +108,65 @@
                         <div class="container ms-4">
                             <div class="row">
                                 <div class="card mx-4 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/joe_rogan.png' %}" class="card-img-top" alt="...">
+                                    <img src="{% static 'images/joe_rogan.png' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body border-bottom-0">
                                         <h5 class="card-title">The Joe Rogan Experience</h5>
                                         <p class="card-text">The Joe Rogan Experience podcast is a long form conversation hosted by comedian Joe Rogan with friends and guests</p>
                                     </div>
                                     <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-dark rounded-bottom rounded-0">Listen Now</a>
+                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
                                 <div class="card mx-4 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/pod-save-america-logo.webp' %}" class="card-img-top" alt="...">
+                                    <img src="{% static 'images/pod-save-america-logo.webp' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">Pod Save America</h5>
                                         <p class="card-text">A no-bullshit conversation about politics hosted by former Obama aides Jon Favreau, Jon Lovett, Dan Pfeiffer, and Tommy Vietor</p>
                                     </div>
                                     <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-dark rounded-bottom rounded-0">Listen Now</a>
+                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
                                 <div class="card mx-4 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/stuff-you-should-know-logo.webp' %}" class="card-img-top" alt="...">
+                                    <img src="{% static 'images/stuff-you-should-know-logo.webp' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">Stuff You Should Know</h5>
                                         <p class="card-text">If you want to know about champagne, satanism, the Stonewall Uprising, chaos theory, LSD, El Nino, true crime and Rosa Parks, then look no further</p>
                                     </div>
                                     <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-dark rounded-bottom rounded-0">Listen Now</a>
+                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="card mx-4 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/office-ladies_logo-scaled.webp' %}" class="card-img-top" alt="...">
+                                    <img src="{% static 'images/office-ladies_logo-scaled.webp' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">Office Ladies</h5>
                                         <p class="card-text">The Office co-stars and best friends, Jenna Fischer and Angela Kinsey, are doing the ultimate The Office re-watch podcast for you</p>
                                     </div>
                                     <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-dark rounded-bottom rounded-0">Listen Now</a>
+                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
                                 <div class="card mx-4 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/morbid-podcast.webp' %}" class="card-img-top" alt="...">
+                                    <img src="{% static 'images/morbid-podcast.webp' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">Morbid</h5>
                                         <p class="card-text">Morbid is a true crime, creepy history and all things spooky podcast hosted by an autopsy technician and a hairstylist</p>
                                     </div>
                                     <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-dark rounded-bottom rounded-0">Listen Now</a>
+                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
                                 <div class="card mx-4 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/the-ben-shapiro-show-scaled.webp' %}" class="card-img-top" alt="...">
+                                    <img src="{% static 'images/the-ben-shapiro-show-scaled.webp' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">The Ben Shapiro Show</h5>
                                         <p class="card-text">Tired of the lies? Tired of the spin? Be ready to hear the hard-hitting truth in comprehensive, conservative, principled fashion</p>
                                     </div>
                                     <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-dark rounded-bottom rounded-0">Listen Now</a>
+                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
                             </div>
