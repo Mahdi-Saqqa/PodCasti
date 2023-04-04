@@ -22,12 +22,13 @@ def create_podcast(request):
         form = MP3UploadForm(request.POST, request.FILES)
         if form.is_valid():
             podcast = form.save(commit=False)
-            podcast.user = request.user
+            #podcast.user = request.user
             podcast.save()
             form.save_m2m()
             messages.success(request, 'Your podcast has been uploaded successfully!')
             return redirect('home')
     else:
+        print("test")
         form = MP3UploadForm()
     return render(request, 'create_podcast.html', {'form': form})
 

@@ -4,4 +4,4 @@ from .models import Podcast
 class MP3UploadForm(forms.ModelForm):
     class Meta:
         model = Podcast
-        fields = ('title', 'user', 'file', 'duration')
+        fields = ('title','file', 'duration')
