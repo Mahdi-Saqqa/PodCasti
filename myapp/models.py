@@ -1,5 +1,7 @@
 
 from django.db import models
+from django.db.models.fields.files import FieldFile
+from django.contrib.auth.models import AbstractUser
 import re
 
 class UserManager(models.Manager):
@@ -57,26 +59,20 @@ class Genre(models.Model):
 
 class Podcast(models.Model):
     title = models.CharField(max_length=255)
-    audio_file = models.FileField(upload_to='audio/')
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     genre = models.ManyToManyField(Genre, related_name='podcasts')
     shares = models.ManyToManyField(User, related_name='shared_podcasts')
     likes = models.ManyToManyField(User, related_name='liked_podcasts')
+    file = models.FileField(upload_to='mp3_files/', null=True)
+    duration = models.DurationField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+    def delete(self, *args, **kwargs):
+        self.file.delete()
+        super().delete(*args, **kwargs)
 
 
-class Comment(models.Model):
-    comment = models.TextField()
-    podcast = models.ForeignKey(Podcast, related_name='comments', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
-class Playlist(models.Model):
-    name = models.CharField(max_length=255)
-    user = models.ForeignKey(User, related_name='playlists', on_delete=models.CASCADE)
-    podcasts = models.ManyToManyField(Podcast, related_name='playlists')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
