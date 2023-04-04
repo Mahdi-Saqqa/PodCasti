@@ -66,6 +66,7 @@ class Podcast(models.Model):
     shares = models.ManyToManyField(User, related_name='shared_podcasts')
     likes = models.ManyToManyField(User, related_name='liked_podcasts')
     file = models.FileField(upload_to='mp3_files/', null=True)
+    cover = models.FileField(upload_to='covers/', null=True)
     duration = models.DurationField(null=True, blank=True)
     user=models.ForeignKey(User,related_name="podcasts",on_delete=models.CASCADE,null=True)
     def __str__(self):
