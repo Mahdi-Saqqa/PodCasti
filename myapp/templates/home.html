@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>upload</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome to My Podcasts</h1>
+    <p>Here are some featured podcasts:</p>
+
+    <div class="row">
+        {% for podcast in podcasts %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ podcast.title }}</h5>
+                    <p class="card-text">{{ podcast.description }}</p>
+                    <audio controls>
+                        <source src="{{ podcast.file.url }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{% url 'podcast_detail' podcast.id %}" class="btn btn-sm btn-outline-secondary">View</a>
+                            {% if user.is_authenticated %}
+                            {% if user in podcast.likes.all %}
+                            <a href="{% url 'unlike_podcast' podcast.id %}" class="btn btn-sm btn-danger">Unlike</a>
+                            {% else %}
+                            <a href="{% url 'like_podcast' podcast.id %}" class="btn btn-sm btn-primary">Like</a>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        <small class="text-muted">{{ podcast.created_at|date:"F d, Y" }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+{% comment %} {% extends 'base.html' %}
+
+{% block content %}
+<h1>Upload MP3 File</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+{% endblock %} {% endcomment %}
+</body>
+</html>

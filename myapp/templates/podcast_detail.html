@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+    {% block title %}
+        {{ podcast.title }}
+    {% endblock %}
+    
+    {% block content %}
+        <h1>{{ podcast.title }}</h1>
+        <p>{{ podcast.description }}</p>
+        <audio controls autoplay>
+            <source src="{{ podcast.file.url }}" type="audio/mpeg">
+        </audio>
+    
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+                {% if user.is_authenticated %}
+                {% if user in podcast.likes.all %}
+                <a href="{% url 'unlike_podcast' podcast.id %}" class="btn btn-sm btn-danger">Unlike</a>
+                {% else %}
+                <a href="{% url 'like_podcast' podcast.id %}" class="btn btn-sm btn-primary">Like</a>
+                {% endif %}
+                {% endif %}
+                {% if user == podcast.user %}
+                <a href="{% url 'edit_podcast' podcast.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <a href="{% url 'delete_podcast' podcast.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                {% endif %}
+            </div>
+            <small class="text-muted">{{ podcast.created_at|date:"F d, Y" }}</small>
+        </div>
+    {% endblock %}
+    
+</body>
+</html>
