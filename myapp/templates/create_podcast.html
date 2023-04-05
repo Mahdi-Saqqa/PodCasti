@@ -4,21 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioPlayer</title>
     {% load static%}
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>AudioPlayer</title>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/path/to/bootstrap.min.css">
 </head>
 <body>
     {% comment %} {% extends 'base.html' %} {% endcomment %}
 
-    {% block content %}
+    {% comment %} {% block content %} {% endcomment %}
+    <div class="uploadcontainer">
         <h1>Upload a new podcast</h1>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" name="title" value="{{ form.title.value }}">
+    
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="title" value="{{ form.title.value }}">
                 {% if form.title.errors %}
                     <ul class="errors">
                         {% for error in form.title.errors %}
@@ -27,9 +31,9 @@
                     </ul>
                 {% endif %}
             </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" id="description" name="description">{{ form.description.value }}</textarea>
+            <div class="input-group">
+                <span class="input-group-text">Description</span>
+                <textarea class="form-control" aria-label="With textarea" name="description">{{ form.description.value }}</textarea>
                 {% if form.description.errors %}
                     <ul class="errors">
                         {% for error in form.description.errors %}
@@ -38,42 +42,46 @@
                     </ul>
                 {% endif %}
             </div>
-            <div class="form-group">
-                <label for="file">File</label>
-                <input type="file" class="form-control-file" id="file" name="file">
-                <input type="file" class="form-control-file" id="cover" name="cover">
-                {% if form.file.errors %}
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="{{ form.mp3_file.id_for_label }}">Audio File</label>
+                <input type="file" class="form-control" id="form.mp3_file.id_for_label" name="mp3_file">
+                {{ form.mp3_file }}
+                {% if form.mp3_file.errors %}
+                    <ul class="errorlist">
+                    {% for error in form.mp3_file.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}    
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="{{ form.image_file.id_for_label }}">Cover Image</label>
+                <input type="file" class="form-control" id="form.image_file.id_for_label" name="image_file">
+                {{ form.image_file }}
+                    {% if form.image_file.errors %}
+                        <ul class="errorlist">
+                        {% for error in form.image_file.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+            </div>
+            {% comment %}    {% if form.file.errors %}
                     <ul class="errors">
                         {% for error in form.file.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
-            </div>
+            </div> {% endcomment %}
+        {% comment %}    {{ form.as_p }} {% endcomment %}
             <button type="submit" class="btn btn-primary">Upload</button>
         </form>
-    
-        <h2>Preview</h2>
-        <audio controls>
-            <source src="{{ preview_url }}" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-    {% endblock %}
-    
+    </div>    
+    {% comment %} {% endblock %} {% endcomment %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 </html>
-{% comment %} <div class="form-group">
-                <label for="genre">Genre</label>
-                <select class="form-control" id="genre" name="genre">
-                    {% for genre in genres %}
-                        <option value="{{ genre.id }}" {% if form.genre.value == genre.id %}selected{% endif %}>{{ genre.genre }}</option>
-                    {% endfor %}
-                </select>
-                {% if form.genre.errors %}
-                    <ul class="errors">
-                        {% for error in form.genre.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div> {% endcomment %}

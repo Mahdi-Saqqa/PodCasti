@@ -5,38 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'playerstyle.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="{% static 'playerjs.js' %}"></script>
 </head>
 <body>
-    {% extends 'base.html' %}
-
-    {% block title %}
-        {{ podcast.title }}
-    {% endblock %}
-    
-    {% block content %}
-        <h1>{{ podcast.title }}</h1>
-        <p>{{ podcast.description }}</p>
-        <audio controls autoplay>
-            <source src="{{ podcast.file.url }}" type="audio/mpeg">
-        </audio>
-    
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="btn-group">
-                {% if user.is_authenticated %}
-                {% if user in podcast.likes.all %}
-                <a href="{% url 'unlike_podcast' podcast.id %}" class="btn btn-sm btn-danger">Unlike</a>
-                {% else %}
-                <a href="{% url 'like_podcast' podcast.id %}" class="btn btn-sm btn-primary">Like</a>
-                {% endif %}
-                {% endif %}
-                {% if user == podcast.user %}
-                <a href="{% url 'edit_podcast' podcast.id %}" class="btn btn-sm btn-outline-secondary">Edit</a>
-                <a href="{% url 'delete_podcast' podcast.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                {% endif %}
-            </div>
-            <small class="text-muted">{{ podcast.created_at|date:"F d, Y" }}</small>
+    <div class="player">
+        {% if podcast.cover %}
+        <div class="cover">
+            <img src="{{ podcast.file.url }}" type="audio/mpeg">
         </div>
-    {% endblock %}
+        {% endif %}
+        <div class="info">
+            <div class="title">{{ podcast.title }}</div>
+            <div class="singer">{{ podcast.user }}</div>
+        </div>
+        <div class="volume-box">
+            <span class="volume-down"><i class="material-icons">remove</i></span>
+            <input type="range" class="volume-range" step="1" value="80" min="0" max="100"
+                oninput="music.volume = this.value/100">
+            <span class="volume-up"><i class="material-icons">add</i></span>
+        </div>
+
+        <div class="btn-box">
+            <i class="material-icons repeat" onclick="handleRepeat()">repeat</i>
+            <i class="material-icons favorite active" onclick="handleFavorite()">favorite</i>
+            <i class="material-icons volume" onclick="handleVolume()">volume_up</i>
+        </div>
+        <div class="music-box">
+            <input type="range" step="1" class="seekbar" value="0" min="0" max="100" oninput="handleSeekBar()">
+
+            <audio class="music-element">
+                <source src="{{ podcast.file.url }}" type="audio/mpeg">
+            </audio>
+            <span class="current-time">0:0</span><span class="duration">0:0</span>
+            <span class="play" onclick="handlePlay()">
+                <i class="material-icons">play_arrow</i>
+            </span>
+        </div>
+
+    </div>
     
 </body>
 </html>
