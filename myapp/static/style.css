@@ -71,3 +71,49 @@ html {
     bottom: 0;
     right: 0;
 }
+
+.signup-box {
+    background-color: #010100;
+    border-radius: 4%;
+    width: 400px;
+    height: 688px;
+    margin: 250px auto;
+    position: relative;
+}
+
+.signup-box h1 {
+    color: #FFFFFF;
+    margin: 0px 35px;
+    margin-bottom: 35px;
+    padding-top: 25px;
+}
+
+.signup-box form input {
+    display: block;
+    border-radius: 4px;
+    width: 324px;
+    height: 50px;
+    margin-left: 35px;
+    margin-right: 41px;
+    margin-bottom: 24px;
+}
+
+#submit {
+    display: inline;
+    color: #010100;
+    background-color: #f8c246;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    width: 150px;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+}
+
+#pwdreset {
+    display: block;
+    color: #FFFFFF;
+    text-decoration: none;
+    margin: 20px 0px;
+    margin-left: 225px;
+}

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import MP3UploadForm
+from .views import MP3UploadForm,MyForm
 """ from django.conf import settings
 from django.conf.urls.static import static
 """
@@ -11,8 +11,10 @@ from django.conf.urls.static import static
 """
 urlpatterns = [
     path('', views.index),
-    path('login', views.login),
-    path('home', views.home, name='home'),
+    path('signup', views.signup),
+    path('createsignup', views.createsignup),
+    path('login', views.gologin),
+    path('createlogin', views.login),
     path('podcast/<int:podcast_id>/', views.podcast_detail, name='podcast_detail'),
     path('create_podcast/', views.create_podcast, name='create_podcast'),
     path('about',views.about)
