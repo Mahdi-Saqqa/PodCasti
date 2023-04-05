@@ -41,3 +41,7 @@ def create_podcast(request):
         print("test")
         form = MP3UploadForm()
     return render(request, 'create_podcast.html', {'form': form})
+
+
+def about(request):
+    return render(request,'about.html')

@@ -15,4 +15,5 @@ urlpatterns = [
     path('home', views.home, name='home'),
     path('podcast/<int:podcast_id>/', views.podcast_detail, name='podcast_detail'),
     path('create_podcast/', views.create_podcast, name='create_podcast'),
+    path('about',views.about)
 ]
