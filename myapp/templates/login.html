@@ -12,14 +12,14 @@
     <body>
         <div class="login-box">
             <h1>Login</h1>
-            <form class="login-form" action="/createlogin" method="post">
+            <form class="login-form" action="/loginaction" method="post">
                 {% csrf_token %}
-              <input id="email" type="text" name="email" placeholder="Email">
+              <input id="username" type="text" name="email" placeholder="Email">
               <input id="password" type="password" name="password" placeholder="Password">
               <!-- <a id="pwdreset" href="#">Forgot password?</a> -->
               <input id="submit" type="submit" name="submit" value="Login">
             </form>
-            <form action="/signup">
+            <form action="/signup" matho="post">
               <input id="register-button" type="submit" name="register" value="Register">
             </form>
           </div>

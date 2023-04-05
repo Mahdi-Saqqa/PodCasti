@@ -1,16 +1,12 @@
 
 from django.db import models
-from django.db.models.fields.files import FieldFile
-from django.contrib.auth.models import AbstractUser
 import re
 
 class UserManager(models.Manager):
     def basic_validator(self, postData):
         errors = {}
         EMAIL_REGEX = re.compile(
-            r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$')
-        USERNAME_REGEX = r'^[a-zA-Z]+$'
-
+            r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$')
         if not postData.get('first_name'):
             errors['first_name'] = 'First name is required.'
         if not postData.get('last_name'):
@@ -19,10 +15,7 @@ class UserManager(models.Manager):
             errors['first_name1'] = 'First name should be at least 2 char.'
         if len(postData['last_name']) < 2:
             errors['last_name1'] = 'First name should be at least 2 char.'
-        if not USERNAME_REGEX.match(postData['first_name']):
-            errors['first_name2'] = "First name should be letters only"
-        if not USERNAME_REGEX.match(postData['last_name']):
-            errors['last_name2'] = "Last name should be letters only"
+
         if len(postData['user_name']) < 5:
             errors['last_name1'] = 'User Name should be at least 5 char.'
         if not EMAIL_REGEX.match(postData['email']):
@@ -48,6 +41,8 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     following = models.ManyToManyField('self', related_name='followed_by', symmetrical=False)
+    picture = models.FileField(upload_to='profiles_picture/', null=True)
+
     objects = UserManager()
 
 
@@ -56,24 +51,15 @@ class Genre(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
 class Podcast(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=100)
     description = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     genre = models.ManyToManyField(Genre, related_name='podcasts')
     shares = models.ManyToManyField(User, related_name='shared_podcasts')
     likes = models.ManyToManyField(User, related_name='liked_podcasts')
-    file = models.FileField(upload_to='mp3_files/', null=True)
-    cover = models.FileField(upload_to='covers/', null=True)
-    duration = models.DurationField(null=True, blank=True)
-    user=models.ForeignKey(User,related_name="podcasts",on_delete=models.CASCADE,null=True)
-    def __str__(self):
-        return self.title
-
-    def delete(self, *args, **kwargs):
-        self.file.delete()
-        super().delete(*args, **kwargs)
-
-
+    file = models.FileField(upload_to='uploads/')
+    cover = models.ImageField(upload_to='covers/',null=True)
+    duration = models.CharField(max_length=10,null=True)
+    added_by=models.ForeignKey(User,related_name="podcasts",on_delete=models.CASCADE,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

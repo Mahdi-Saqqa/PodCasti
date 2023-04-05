@@ -45,16 +45,16 @@
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         <li class="nav-item mt-5">
-                            <a href="#" class="nav-link align-middle px-0">
+                            <a href="/" class="nav-link align-middle px-0">
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="nav-link px-0 align-middle">
+                            <a href="/profile" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-person-square"></i> <span class="ms-1 d-none d-sm-inline">Profile</span></a>
                         </li>
                         <li>
-                            <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                            <a href="/library" class="nav-link px-0 align-middle ">
                                 <i class="fs-4 bi-collection-play"></i> <span class="ms-1 d-none d-sm-inline">Your Library</span></a>
                             <!-- <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                                 <li class="w-100">
@@ -64,6 +64,24 @@
                                     <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2</a>
                                 </li>
                             </ul> -->
+                        </li>
+                        <li>
+                            <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Genre</span> </a>
+                                <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+                                <li class="w-100">
+                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Entertainment</span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Politics</span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Crime</span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Education</span></a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="/about" class="nav-link px-0 align-middle">
@@ -88,8 +106,8 @@
                     </div>
                 </div>
             </div>
-            <div class="header">
-                <div class="row mt-4 align-items-center d-flex justify-content-evenly">
+            <div class="header w-100">
+                <div class="row mt-4 ms-0 align-items-center d-flex justify-content-evenly">
                     <div class="col-md-3">
                         <img class="logo" src="{% static 'images/podcasti2.png' %}" alt="PodCasti logo">
                     </div>
@@ -99,15 +117,15 @@
                         </div>
                     </div>
                     <div class="col-md-4 d-flex justify-content-end">
-                            <a class="btn btn-outline-light rounded-pill" href="#">Login</a>
-                            <a class="btn btn-light rounded-pill ms-2" href="#">Register</a>
+                            <a class="btn btn-outline-light rounded-pill" href="/login">Login</a>
+                            <a class="btn btn-light rounded-pill ms-2" href="/">Register</a>
                     </div>
                 </div>
-                <div class="container d-flex">
+                <div class="container d-grid gap-3">
                     <div class="col py-3">
                         <div class="container ms-4">
                             <div class="row">
-                                <div class="card mx-4 p-0" style="width: 20rem;">
+                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
                                     <img src="{% static 'images/joe_rogan.png' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body border-bottom-0">
                                         <h5 class="card-title">The Joe Rogan Experience</h5>
@@ -117,7 +135,7 @@
                                         <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
-                                <div class="card mx-4 p-0" style="width: 20rem;">
+                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
                                     <img src="{% static 'images/pod-save-america-logo.webp' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">Pod Save America</h5>
@@ -127,7 +145,7 @@
                                         <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
-                                <div class="card mx-4 p-0" style="width: 20rem;">
+                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
                                     <img src="{% static 'images/stuff-you-should-know-logo.webp' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">Stuff You Should Know</h5>
@@ -137,9 +155,7 @@
                                         <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="card mx-4 p-0" style="width: 20rem;">
+                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
                                     <img src="{% static 'images/office-ladies_logo-scaled.webp' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">Office Ladies</h5>
@@ -149,7 +165,7 @@
                                         <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
-                                <div class="card mx-4 p-0" style="width: 20rem;">
+                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
                                     <img src="{% static 'images/morbid-podcast.webp' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">Morbid</h5>
@@ -159,7 +175,7 @@
                                         <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
-                                <div class="card mx-4 p-0" style="width: 20rem;">
+                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
                                     <img src="{% static 'images/the-ben-shapiro-show-scaled.webp' %}" class="card-img-top img-fluid same-size" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">The Ben Shapiro Show</h5>

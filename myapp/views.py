@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from myapp.models import Podcast, Genre, User
-from myapp.forms import MP3UploadForm,MyForm
+from myapp.forms import *
 import bcrypt
 
 
@@ -12,8 +11,9 @@ def index(request):
 
 def signup(request):
     return render(request, 'signup.html')
-    
-def createsignup(request):
+
+
+def signupaction(request):
     errors = User.objects.basic_validator(request.POST)
     if len(errors) > 0:
         for key, value in errors.items():
@@ -28,68 +28,69 @@ def createsignup(request):
                             user_name=request.POST['user_name'],
                             dob=request.POST['dob'],
                             password=pw_hash)
-        request.session['user_name']=request.POST['first_name'] 
         return render(request, 'login.html')
-        
-def gologin(request):
-    return render(request, 'login.html')
+
 
 def login(request):
+    return render(request, 'login.html')
+
+
+def loginaction(request):
+    print('function run')
     user = User.objects.filter(email=request.POST['email']).first()
     if user:
+        print('user found')
         if bcrypt.checkpw(request.POST['password'].encode(), user.password.encode()):
-            request.session['user_name'] = user.first_name
+            request.session['user_id'] = user.id
 
             return redirect('/')
         else:
+            print('wrong password')
             messages.error(request, "Wrong Password")
             return redirect('/login')
 
-        
     else:
+        print('email not found')
         messages.error(request, "Email not found in the database")
         return redirect('/login')
-    
-""" def home(request):
-    podcasts = Podcast.objects.all()
-    return render(request, 'home.html', {'podcasts': podcasts})
-"""
 
-def podcast_detail(request, podcast_id):
-    if 'user_name' in request.session:
-        podcast = Podcast.objects.get(id=podcast_id)
-        print(Podcast.objects.get(id=podcast_id).file.url)
-        return render(request, 'playertest.html', {'podcast': podcast})
+
+def addpodcast(request):
+    if 'user_id' in request.session:
+        if request.method == 'POST':
+            loged_user=User.objects.get(id=request.session['user_id'])
+            print(loged_user.first_name)
+            mp3_form = MP3UploadForm(request.POST, request.FILES)
+            if mp3_form.is_valid():
+                podcast = mp3_form.save(commit=False)
+                podcast.description = request.POST['description']
+                podcast.added_by=loged_user
+                podcast.save()
+                return redirect('/')
+        else:
+            mp3_form = MP3UploadForm()
+        context = {'mp3_form': mp3_form}
+        return render(request, 'add_podcast.html', context)
     else:
         return redirect('/login')
-    
-def my_view(request):
-    if request.method == 'POST':
-        form = MyForm(request.POST, request.FILES)
-        if form.is_valid():
-            mp3_file = form.cleaned_data['mp3_file']
-            image_file = form.cleaned_data['image_file']
-    else:
-        form = MyForm()
-    return render(request, 'create_podcast.html', {'form': form})
 
 
-def create_podcast(request):
-    if request.method == 'POST':
-        form = MP3UploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            podcast = form.save(commit=False)
-            # podcast.user = request.user
-            podcast.save()
-            form.save_m2m()
-            messages.success(
-                request, 'Your podcast has been uploaded successfully!')
-            return redirect('home')
+def player(request, podcast_id):
+    if 'user_id' in request.session:
+        podcast = Podcast.objects.get(id=podcast_id)
+        print(Podcast.objects.get(id=podcast_id).file.url)
+        print(podcast.added_by)
+        return render(request, 'player.html', {'podcast': podcast})
     else:
-        print("test")
-        form = MP3UploadForm()
-    return render(request, 'create_podcast.html', {'form': form})
+        return redirect('/login')
 
 
 def about(request):
-    return render(request,'about.html')
+    return render(request, 'about.html')
+def profile(request):
+    return render(request, 'profile.html')
+
+def library(request):
+    return render(request, 'library.html')
+def update(request):
+    return render(request, 'update.html')
