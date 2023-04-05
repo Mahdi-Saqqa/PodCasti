@@ -9,8 +9,9 @@ urlpatterns = [
     path('signupaction', views.signupaction),
     path('addpodcast/', views.addpodcast, name='addpodcast'),
     path('podcast/<int:podcast_id>/', views.player, name='player'),
-    path('about',views.about),
-    path('profile',views.profile),
-    path('library',views.library),
-    path('update',views.update),
+    path('about', views.about),
+    path('profile', views.profile),
+    path('library', views.library),
+    path('update', views.update),
+    path('signout', views.signout)
 ]

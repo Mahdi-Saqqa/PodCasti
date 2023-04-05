@@ -42,13 +42,11 @@ def loginaction(request):
         print('user found')
         if bcrypt.checkpw(request.POST['password'].encode(), user.password.encode()):
             request.session['user_id'] = user.id
-
             return redirect('/')
         else:
             print('wrong password')
             messages.error(request, "Wrong Password")
             return redirect('/login')
-
     else:
         print('email not found')
         messages.error(request, "Email not found in the database")
@@ -58,13 +56,13 @@ def loginaction(request):
 def addpodcast(request):
     if 'user_id' in request.session:
         if request.method == 'POST':
-            loged_user=User.objects.get(id=request.session['user_id'])
+            loged_user = User.objects.get(id=request.session['user_id'])
             print(loged_user.first_name)
             mp3_form = MP3UploadForm(request.POST, request.FILES)
             if mp3_form.is_valid():
                 podcast = mp3_form.save(commit=False)
                 podcast.description = request.POST['description']
-                podcast.added_by=loged_user
+                podcast.added_by = loged_user
                 podcast.save()
                 return redirect('/')
         else:
@@ -85,12 +83,22 @@ def player(request, podcast_id):
         return redirect('/login')
 
 
+def signout(request):
+    request.session.flush()
+    return redirect('/')
+
+
 def about(request):
     return render(request, 'about.html')
+
+
 def profile(request):
     return render(request, 'profile.html')
 
+
 def library(request):
     return render(request, 'library.html')
+
+
 def update(request):
     return render(request, 'update.html')
