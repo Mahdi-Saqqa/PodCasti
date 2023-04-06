@@ -84,9 +84,8 @@ def addpodcast(request):
                 podcast = mp3_form.save(commit=False)
                 podcast.description = request.POST['description']
                 podcast.added_by = loged_user
+                podcast.genre=request.POST['genre']
                 podcast.save()
-                cat=Genre.objects.filter(genre=request.POST['genre']).first()
-                podcast.genre.add(cat)
                 return redirect('/')
         else:
             mp3_form = MP3UploadForm()
@@ -192,8 +191,6 @@ def library(request):
             'loged_user':loged_user
 
         }
-        for i in Genre.objects.all():
-            print(i.genre)
         return render(request, 'library.html', context)
     else:
         return redirect('/')
@@ -258,8 +255,7 @@ def deletepodcast(request,id):
 def genre(request,genre):
     if 'user_id' in request.session:
         loged_user = User.objects.get(id=request.session['user_id'])
-        cat=Genre.objects.get(genre=genre)
-        podcasts=cat.podcasts.all()
+        podcasts=Podcast.objects.filter(genre__icontains=genre)
         context ={
             'podcasts':podcasts,
             'islogged':True,
@@ -269,3 +265,7 @@ def genre(request,genre):
         return render(request, 'library.html', context)
     else:
         return redirect('/')
+    
+def follow(request):
+    loged_user = User.objects.get(id=request.session['user_id'])
+    user = User.objects.get(id=id)

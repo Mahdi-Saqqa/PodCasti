@@ -111,7 +111,7 @@
                                                 class="d-none d-sm-inline">Education</span></a>
                                     </li>
                                     <li>
-                                        <a href="genre/business" class="nav-link
+                                        <a href="/genre/business" class="nav-link
                                             px-0"> <span class="d-none
                                                 d-sm-inline">Business</span></a>
                                     </li>
@@ -222,7 +222,12 @@
                                 </div>
                                 <div class="d-flex text-warning">
                                     {% if loged_user.id is not user.id %}
-                                    <p><a href="/follow/{{user.id}}">Follow</a></p>
+                                        {% if user not in loged_user.following.all  %}
+                                        <p><a  class="btn btn-success rounded-pill ms-2 " href="/follow/{{user.id}}">Follow</a></p>
+                                        {% else %}
+                                        <p><a  class="btn btn-warning rounded-pill ms-2 " href="/unfollow/{{user.id}}">Unfollow</a></p>
+
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </div>

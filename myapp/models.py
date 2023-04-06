@@ -48,16 +48,13 @@ class User(models.Model):
     objects = UserManager()
 
 
-class Genre(models.Model):
-    genre = models.CharField(max_length=45)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+
 
 
 class Podcast(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    genre = models.ManyToManyField(Genre, related_name='podcasts')
+    genre = models.CharField(max_length=100,default='culture')
     shares = models.ManyToManyField(User, related_name='shared_podcasts')
     likes = models.ManyToManyField(User, related_name='liked_podcasts')
     file = models.FileField(upload_to='uploads/')
