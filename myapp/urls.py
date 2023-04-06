@@ -16,5 +16,8 @@ urlpatterns = [
     path('library', views.library),
     path('update', views.update),
     path('signout', views.signout),
-    path('updateaction',views.updateaction)
+    path('updateaction',views.updateaction),
+    path('likepodcast/<int:id>',views.likepodcast),
+    path('unlikepodcast/<int:id>',views.unlikepodcast),
+
 ]

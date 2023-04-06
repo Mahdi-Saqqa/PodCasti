@@ -186,9 +186,24 @@
                                 <div>
                                     <h1>{{podcast.title}}</h1>
                                     <p>{{podcast.description}}</p>
+                                    {% if podcast in favorites %}
+                                    <form action="/unlikepodcast/{{podcast.id}}"
+                                        method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn
+                                            btn-danger rounded-pill ms-2">UnLike</button>
+                                    </form>
+                                    {% else %}
+                                    <form action="/likepodcast/{{podcast.id}}"
+                                        method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn
+                                            btn-danger rounded-pill ms-2">Like</button>
+                                    </form>
+                                    {% endif %}
                                 </div>
                                 <div>
-                                    <audio controls autoplay class="w-100">
+                                    <audio controls class="w-100">
                                         <source src="{{ podcast.file.url }}"
                                             type="audio/mpeg">
                                     </audio>

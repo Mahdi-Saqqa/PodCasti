@@ -98,12 +98,26 @@ def addpodcast(request):
 
 def player(request, podcast_id):
     if 'user_id' in request.session:
+        loged_user = User.objects.get(id=request.session['user_id'])
         podcast = Podcast.objects.get(id=podcast_id)
         print(Podcast.objects.get(id=podcast_id).file.url)
-        print(podcast.added_by)
-        return render(request, 'player.html', {'podcast': podcast})
+        print(loged_user.liked_podcasts.all())
+        print(podcast)
+        print(loged_user)
+        user=podcast.added_by
+        favorites = loged_user.liked_podcasts.all()
+        print(user)
+        context={
+            'podcast': podcast,
+            'logged_user':loged_user,
+            'user':user,
+            'favorites':favorites
+
+        }
+        return render(request, 'player.html', context)
     else:
-        return redirect('/login')
+        
+        return render(request, 'player.html', context)
 
 
 def about(request):
@@ -160,7 +174,6 @@ def otherprofile(request, id):
         return render(request, 'profile.html', context)
     else:
         context={
-            'message':'',
             'islogged':False
 
         }
@@ -171,12 +184,15 @@ def otherprofile(request, id):
 def library(request):
     if 'user_id' in request.session:
         loged_user = User.objects.get(id=request.session['user_id'])
-        podcasts = loged_user.podcasts.all()
-        data ={
+        podcasts = loged_user.liked_podcasts.all()
+        favorites = loged_user.liked_podcasts.all()
+        context ={
             'podcasts':podcasts,
-            #'loged_user':loged_user,
+            'islogged':True,
+            'favorites':favorites,
+
         }
-        return render(request, 'library.html', data)
+        return render(request, 'library.html', context)
     else:
         return redirect('/')
 
@@ -211,3 +227,13 @@ def updateaction(request):
 def signout(request):
     logout(request)
     return redirect('/login')
+def likepodcast(request,id):
+    loged_user = User.objects.get(id=request.session['user_id'])
+    podcast = Podcast.objects.get(id=id)
+    loged_user.liked_podcasts.add(podcast)
+    return redirect(request.META.get('HTTP_REFERER'))
+def unlikepodcast(request,id):
+    loged_user = User.objects.get(id=request.session['user_id'])
+    podcast = Podcast.objects.get(id=id)
+    loged_user.liked_podcasts.remove(podcast)
+    return redirect(request.META.get('HTTP_REFERER'))
