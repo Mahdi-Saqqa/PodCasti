@@ -27,8 +27,8 @@ Confirm Password
 All provided information will be validated
 
 <div>
-<img src="(https://user-images.githubusercontent.com/124319017/230327342-f0be74d9-d354-4088-963a-2d8e0763a521.png">
-<img src="https://user-images.githubusercontent.com/124319017/230327462-17f41ee6-c161-45cf-9466-c9cbe497cab8.png">
+<img src="(https://user-images.githubusercontent.com/124319017/230327342-f0be74d9-d354-4088-963a-2d8e0763a521.png" width="300">
+<img src="https://user-images.githubusercontent.com/124319017/230327462-17f41ee6-c161-45cf-9466-c9cbe497cab8.png" width="300">
 </div>
 
 . Podcasters will be able to upload audio files, add descriptions, and include cover
