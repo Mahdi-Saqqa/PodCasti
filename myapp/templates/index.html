@@ -101,23 +101,35 @@
                         </li>
                     </ul>
                     <hr>
-                        {% if user %}
-                        <div class="dropdown pb-4">
-                        <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="" alt="PodCastiUser" width="30" height="30" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">{{user.first_name}}</span>
+                    {% if islogged %}
+                    <div class="dropdown pb-4">
+                        <a href="#" class="d-flex align-items-center
+                            text-black text-decoration-none
+                            dropdown-toggle" id="dropdownUser1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {% if loged_user.picture %}
+                            <img src="{{loged_user.picture.url}}" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                            {% else %}
+                            <img src="{% static 'images/def_user.jpeg' %}" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                            {% endif %}
+                            <span class="d-none d-sm-inline mx-1">{{loged_user.first_name}}</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="/addpodcast">New</a></li>
+                        <ul class="dropdown-menu dropdown-menu-dark
+                            text-small shadow">
+                            <li><a class="dropdown-item"
+                                    href="/addpodcast">New</a></li>
                             <li><a class="dropdown-item" href="/update">Settings</a></li>
-                            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                            <li><a class="dropdown-item"
+                                    href="/profile">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="/signout">Sign out</a></li>
+                            <li><a class="dropdown-item"
+                                    href="/signout">Sign out</a></li>
                         </ul>
                     </div>
-                    {% endif%}
+                    {% endif %}
                 </div>
             </div>
             <div class="header w-100">
@@ -131,11 +143,11 @@
                         </div>
                     </div>
                     <div class="col-md-4 d-flex justify-content-end">
-                        {% if not loged_user%}
+                        {% if not islogged%}
                         <a class="btn btn-outline-light rounded-pill" href="/login">Login</a>
                         <a class="btn btn-light rounded-pill ms-2" href="/signup">Register</a>
                         {% else %}
-                        <p></p>
+                        <h3>{{loged_user.first_name}}</h3>
                         {% endif %}
                     </div>
                 </div>
@@ -143,66 +155,27 @@
                     <div class="col py-3">
                         <div class="container ms-4">
                             <div class="row">
+                                {% for profile in profiles %}
                                 <div class="card mx-4 m-3 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/joe_rogan.png' %}" class="card-img-top img-fluid same-size" alt="...">
+                                    {% if not profile.picture %}
+                                    <img src="{% static 'images/def_user.jpeg' %}" class="card-img-top img-fluid same-size" alt="...">
+                                    {% else %}
+                                    <img src="{{profile.picture.url}}" class="card-img-top img-fluid same-size" alt="...">
+                                    {% endif %}
                                     <div class="card-body border-bottom-0">
-                                        <h5 class="card-title">The Joe Rogan Experience</h5>
-                                        <p class="card-text">The Joe Rogan Experience podcast is a long form conversation hosted by comedian Joe Rogan with friends and guests</p>
+                                        <h5 class="card-title">{{profile.user_name}}</h5>
+                                        {% if profile.bio %}
+                                        <p class="card-text">{{profile.bio}}</p>
+                                        {%else%}
+                                        <p class="card-text"></p>
+                                        {% endif %}
                                     </div>
                                     <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
+                                        <a href="/profile/{{profile.id}}" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
                                     </div>
                                 </div>
-                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/pod-save-america-logo.webp' %}" class="card-img-top img-fluid same-size" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Pod Save America</h5>
-                                        <p class="card-text">A no-bullshit conversation about politics hosted by former Obama aides Jon Favreau, Jon Lovett, Dan Pfeiffer, and Tommy Vietor</p>
-                                    </div>
-                                    <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
-                                    </div>
-                                </div>
-                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/stuff-you-should-know-logo.webp' %}" class="card-img-top img-fluid same-size" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Stuff You Should Know</h5>
-                                        <p class="card-text">If you want to know about champagne, satanism, the Stonewall Uprising, chaos theory, LSD, El Nino, true crime and Rosa Parks, then look no further</p>
-                                    </div>
-                                    <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
-                                    </div>
-                                </div>
-                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/office-ladies_logo-scaled.webp' %}" class="card-img-top img-fluid same-size" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Office Ladies</h5>
-                                        <p class="card-text">The Office co-stars and best friends, Jenna Fischer and Angela Kinsey, are doing the ultimate The Office re-watch podcast for you</p>
-                                    </div>
-                                    <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
-                                    </div>
-                                </div>
-                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/morbid-podcast.webp' %}" class="card-img-top img-fluid same-size" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Morbid</h5>
-                                        <p class="card-text">Morbid is a true crime, creepy history and all things spooky podcast hosted by an autopsy technician and a hairstylist</p>
-                                    </div>
-                                    <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
-                                    </div>
-                                </div>
-                                <div class="card mx-4 m-3 p-0" style="width: 20rem;">
-                                    <img src="{% static 'images/the-ben-shapiro-show-scaled.webp' %}" class="card-img-top img-fluid same-size" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">The Ben Shapiro Show</h5>
-                                        <p class="card-text">Tired of the lies? Tired of the spin? Be ready to hear the hard-hitting truth in comprehensive, conservative, principled fashion</p>
-                                    </div>
-                                    <div class="card-footer p-0 d-grid gap-2 border-0">
-                                        <a href="#" class="btn btn-warning rounded-bottom rounded-0">Listen Now</a>
-                                    </div>
-                                </div>
+                                {% endfor %}
+                                
                             </div>
                         </div>
                     </div>

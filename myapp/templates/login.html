@@ -9,6 +9,13 @@
       <link rel="shortcut icon" href="{% static 'images/favIcon.png' %}" type="image/x-icon">
       <link rel="stylesheet" href="{% static 'style.css' %}">
       <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+      <style>
+        .messages {
+          color: white;
+          text-align:center;
+          list-style: none;
+        }
+      </style>
     </head>
     <body>
         <div class="login-box">
@@ -23,13 +30,14 @@
             <form action="/signup" matho="post">
               <input id="register-button" type="submit" name="register" value="Register">
             </form>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
           </div>
-          {% if messages %}
-          <ul class="messages">
-              {% for message in messages %}
-              <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-              {% endfor %}
-          </ul>
-          {% endif %}
+
     </body>
 </html>

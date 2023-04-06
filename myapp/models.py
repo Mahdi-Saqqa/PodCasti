@@ -43,8 +43,8 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     following = models.ManyToManyField(
         'self', related_name='followed_by', symmetrical=False)
-    picture = models.FileField(upload_to='profiles_picture/', null=True)
-
+    picture = models.ImageField(upload_to='profiles_picture/', null=True)
+    bio=models.TextField(null=True)
     objects = UserManager()
 
 
