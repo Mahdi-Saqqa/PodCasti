@@ -34,6 +34,6 @@ All provided information will be validated
 . Podcasters will be able to upload audio files, add descriptions, and include cover
 art
 
-<img src="Uploading Screen_Shot_2023-04-06_at_03.29.35.png">
+<img src="[Uploading Screen_Shot_2023-04-06_at_03.29.35.png](https://user-images.githubusercontent.com/124319017/230325153-f351e3ff-c3fa-4460-bbc3-3579d11e9bcc.png)">
 
 
