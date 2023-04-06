@@ -17,3 +17,23 @@ Mohammad Sabha
 
 ### Functionality
 
+. To create an account, users are required to provide the following information:
+First & Last Name
+Username
+Email Address
+Date of Birth
+Password
+Confirm Password
+All provided information will be validated
+
+<div>
+<img src="">
+<img src="">
+</div>
+
+. Podcasters will be able to upload audio files, add descriptions, and include cover
+art
+
+<img src="Uploading Screen_Shot_2023-04-06_at_03.29.35.png">
+
+
