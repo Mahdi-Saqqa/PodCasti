@@ -75,7 +75,6 @@ def loginaction(request):
 
 
 def addpodcast(request):
-    print(request.POST['genre'])
     if 'user_id' in request.session:
         if request.method == 'POST':
             loged_user = User.objects.get(id=request.session['user_id'])
@@ -85,10 +84,8 @@ def addpodcast(request):
                 podcast = mp3_form.save(commit=False)
                 podcast.description = request.POST['description']
                 podcast.added_by = loged_user
-
                 podcast.save()
                 cat=Genre.objects.filter(genre=request.POST['genre']).first()
-                
                 podcast.genre.add(cat)
                 return redirect('/')
         else:
@@ -205,9 +202,21 @@ def library(request):
 def update(request):
     if 'user_id' in request.session:
         loged_user = User.objects.get(id=request.session['user_id'])
-        context={
-            'loged_user':loged_user
-        }    
+        followers_number=len(list(loged_user.followed_by.all()))
+        followers=loged_user.following.all()
+        following_number=len(list(loged_user.following.all()))
+        following=loged_user.following.all()
+        podcasts = loged_user.podcasts.all()
+        context ={
+            'podcasts':podcasts,
+            'loged_user':loged_user,
+            'user':loged_user,
+            'islogged':True,
+            'followers_number':followers_number,
+            'following_number':following_number,
+            'followers':followers,
+            'following':following,
+        }
         return render(request, 'update.html', context)
     else:
         return redirect('/profile')
@@ -218,7 +227,6 @@ def updateaction(request):
     
     loged_user.last_name=request.POST['last_name']
     loged_user.email=request.POST['email']
-    loged_user.dob=request.POST['dob']
     loged_user.bio=request.POST['bio']
     try:
         loged_user.picture=request.FILES['profile_photo']

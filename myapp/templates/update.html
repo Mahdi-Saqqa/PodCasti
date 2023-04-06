@@ -132,15 +132,41 @@
                             <a class="btn btn-light rounded-pill ms-2" href="#">Register</a>
                     </div>
                 </div>
-                <div class="container d-flex pr-5 mt-5 align-items-center">
-                    <img src="{% static 'images/ben-shapiro.jpeg' %}" width="200" height="200" class="ms-5 rounded-circle" alt="...">
-                    <div class="d-flex flex-column align-items-center ms-5">
-                        <h1 class="h1 mt-3">Ben Shapiro</h1>
-                        <div class="d-flex text-warning">
-                            <p class="text-warning me-2">5 following </p>|<p class="text-warning ms-2"> 5 followers</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="container d-flex pr-5 mt-5 mb-5
+                            align-items-center">
+                            {% if islogged %}
+                            <div class="container d-flex pr-5 mt-5 mb-5
+                                align-items-center">
+                                {% if user.picture %}
+                                <img src="{{user.picture.url}}" width="200"
+                                    height="200" class="ms-5 rounded-circle"
+                                    alt="...">
+                                {% else %}
+                                <img src="{% static 'images/def_user.jpeg' %}"
+                                    width="200" height="200" class="ms-5
+                                    rounded-circle" alt="...">
+                                {% endif %}
+                                <div class="d-flex flex-column align-items-center
+                                    ms-5">
+                                    <h1 class="h1 mt-3">{{user.first_name}} 
+                                        {{user.last_name}}</h1>
+                                    <div class="d-flex text-warning">
+                                        <p class="text-warning me-2">{{following_number}}
+                                            following </p>|<p class="text-warning
+                                            ms-2"> {{followers_number}} followers</p>
+                                    </div>
+                                    <div class="d-flex text-warning">
+                                        {% if loged_user.id is not user.id %}
+                                        <p><a href="/follow/{{user.id}}">Follow</a></p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            {% else %}
+                            <h1 class="h1 ms-5 mt-5">Please Log in to access the Platform</h1>
+                            {% endif %}
+                                
                 <div class="card-form card w-75 mb-3 mx-auto mt-5 border-0">
                     <div class="card-body">
                         <form action="/updateaction" method="post" enctype="multipart/form-data">
@@ -165,10 +191,7 @@
                                 <label for="email">Email Address</label>
                                 <input type="email" class="form-control mb-4" id="email" name="email" value="{{loged_user.email}}">
                             </div>
-                            <div class="form-group">
-                                <label for="date-of-birth">Date of Birth</label>
-                                <input type="date" class="form-control mb-5" id="date-of-birth" name="dob" value="{{loged_user.dob}}">
-                            </div>
+
                             <button type="submit" class="btn btn-warning">Update Information</button>
                         </form>
                     </div>
