@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <div class="header w-100">
-                    <div class="row ms-0 mt-4 align-items-center d-flex justify-content-evenly">
+                    <div class="row ms-0 mt-4 mb-3 align-items-center d-flex justify-content-evenly">
                         <div class="col-md-3">
                             <img class="logo" src="{% static 'images/podcasti2.png' %}" alt="PodCasti logo">
                         </div>
@@ -130,20 +130,52 @@
                             </div>
                         </div>
                         <div class="col-md-4 d-flex justify-content-end">
-                                <a class="btn btn-outline-light rounded-pill" href="#">Login</a>
-                                <a class="btn btn-light rounded-pill ms-2" href="#">Register</a>
+                            {% if not user%}
+                            <a class="btn btn-outline-light rounded-pill" href="/login">Login</a>
+                            <a class="btn btn-light rounded-pill ms-2" href="/signup">Register</a>
+                            {% else %}
+                            <p></p>
+                            {% endif %}
                         </div>
                     </div>
-                    <div class="container d-flex pr-5 mt-5 align-items-center">
+                    <div class="container d-flex pr-5 mt-5 mb-5 align-items-center">
                         <img src="{% static 'images/ben-shapiro.jpeg' %}" width="200" height="200" class="ms-5 rounded-circle" alt="...">
                         <div class="d-flex flex-column align-items-center ms-5">
                             <h1 class="h1 mt-3">Ben Shapiro</h1>
                             <div class="d-flex text-warning">
                                 <p class="text-warning me-2">5 following </p>|<p class="text-warning ms-2"> 5 followers</p>
                             </div>
+                            <div class="d-flex text-warning">
+                            <p><a href="/addpodcast/">Add to my list</a></p>
+                            </div>
                         </div>
                     </div>
-                    <div class="container d-grid gap-3">
+                    {% for podcast in podcasts%}
+                    <div class="container w-100 mx-5 mt-3">
+                        <div class="row w-50 p-4 d-flex rounded-4 justify-content-between" id="player">
+                            <div class="col-md-4">
+                                <img src="{{ podcast.cover.url }}"
+                                    class="same-size  rounded">
+                            </div>
+                            <div class="col-md-8 d-flex flex-column
+                                justify-content-between">
+                                <div>
+                                    <h5><a href="/podcast/{{ podcast.id }}/">{{podcast.title}}</a></h5>
+                                    <p>{{podcast.description}}</p>
+                                </div>
+                                <div>
+                                    <audio controls class="w-100">
+                                        <source src="{{ podcast.file.url }}"
+                                            type="audio/mpeg">
+                                    </audio>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </div>
+                    {% comment %} <div class="container d-grid gap-3">
                         <div class="col py-3">
                             <div class="container ms-4">
                                 <div class="row">
@@ -190,11 +222,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
             </div>
         </div>
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

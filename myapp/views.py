@@ -1,12 +1,19 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 from django.contrib import messages
 from myapp.models import Podcast, Genre, User
 from myapp.forms import *
 import bcrypt
 
 
-def index(request):
-    return render(request, 'index.html')
+
+def index(request):    
+    if 'user_id' in request.session:
+        user = True
+        context = {'user': user}
+        return render(request, 'index.html', context)
+    else:
+        return render(request, 'index.html')
 
 
 def signup(request):
@@ -67,7 +74,9 @@ def addpodcast(request):
                 return redirect('/')
         else:
             mp3_form = MP3UploadForm()
-        context = {'mp3_form': mp3_form}
+        context = {
+                'mp3_form': mp3_form
+                }
         return render(request, 'add_podcast.html', context)
     else:
         return redirect('/login')
@@ -83,22 +92,60 @@ def player(request, podcast_id):
         return redirect('/login')
 
 
-def signout(request):
-    request.session.flush()
-    return redirect('/')
-
-
 def about(request):
     return render(request, 'about.html')
 
 
 def profile(request):
-    return render(request, 'profile.html')
-
+    if 'user_id' in request.session:
+        loged_user = User.objects.get(id=request.session['user_id'])
+        podcasts = loged_user.podcasts.all()
+        context ={
+            'podcasts':podcasts,
+            'loged_user':loged_user
+        }
+        return render(request, 'profile.html', context)
+    else:
+        return redirect('/')
+        
+def otherprofile(request, user_id):
+    if 'user_id' in request.session:
+        user = User.objects.get(id=user_id)
+        loged_user = User.objects.get(id=request.session['user_id'])
+        podcasts = user.podcasts.all()
+        context ={
+            'podcasts':podcasts,
+            'loged_user':loged_user,
+            'user':user,
+        }
+        return render(request, 'profile.html', context)
+    else:
+        return redirect('/profile/{user_id}/')      
 
 def library(request):
-    return render(request, 'library.html')
+    if 'user_id' in request.session:
+        loged_user = User.objects.get(id=request.session['user_id'])
+        podcasts = loged_user.podcasts.all()
+        data ={
+            'podcasts':podcasts,
+            #'loged_user':loged_user,
+        }
+        return render(request, 'library.html', data)
+    else:
+        return redirect('/')
 
 
 def update(request):
-    return render(request, 'update.html')
+    if 'user_id' in request.session:
+        loged_user = User.objects.get(id=request.session['user_id'])
+        #inf = loged_user.
+        context={
+            'loged_user':loged_user,
+        }    
+        return render(request, 'update.html', context)
+    else:
+        return redirect('/profile')
+
+def signout(request):
+    logout(request)
+    return redirect('/login')

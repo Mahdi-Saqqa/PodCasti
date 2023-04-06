@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import signout
 
 urlpatterns = [
     path('', views.index),
@@ -11,7 +12,8 @@ urlpatterns = [
     path('podcast/<int:podcast_id>/', views.player, name='player'),
     path('about', views.about),
     path('profile', views.profile),
+    path('otherprofile/<int:id>/', views.otherprofile),
     path('library', views.library),
     path('update', views.update),
-    path('signout', views.signout)
+    path('signout', views.signout),
 ]

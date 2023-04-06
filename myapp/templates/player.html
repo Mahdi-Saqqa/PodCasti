@@ -152,15 +152,18 @@
                         </div>
                         <div class="col-md-3 text-center">
                             <div class="input-group">
-                                <input class="form-control border-secondary
+                                {% comment %} <input class="form-control border-secondary
                                     rounded-pill pr-5" type="search"
-                                    placeholder="Search">
+                                    placeholder="Search"> {% endcomment %}
                             </div>
                         </div>
                         <div class="col-md-4 d-flex justify-content-end">
-                            <a class="btn btn-outline-light rounded-pill"
-                                href="/login">Login</a>
-                            <a class="btn btn-light rounded-pill ms-2" href="/">Register</a>
+                            {% if not user%}
+                            <a class="btn btn-outline-light rounded-pill" href="/login">Login</a>
+                            <a class="btn btn-light rounded-pill ms-2" href="/signup">Register</a>
+                            {% else %}
+                            <p></p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="container d-flex pr-5 mt-5 align-items-center">
@@ -173,9 +176,6 @@
                         </div>
                     </div>
                     <div class="container w-100 mx-5 mt-5">
-                        <div class="row">
-                            {{podcast.added_by.first_name}}
-                        </div>
                         <div class="row w-75 p-4 d-flex rounded-4 justify-content-between" id="player">
                             <div class="col-md-4">
                                 <img src="{{ podcast.cover.url }}"

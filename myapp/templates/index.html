@@ -101,10 +101,11 @@
                         </li>
                     </ul>
                     <hr>
-                    <div class="dropdown pb-4">
+                        {% if user %}
+                        <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">loser</span>
+                            <img src="" alt="PodCastiUser" width="30" height="30" class="rounded-circle">
+                            <span class="d-none d-sm-inline mx-1">{{user.first_name}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                             <li><a class="dropdown-item" href="/addpodcast">New</a></li>
@@ -116,6 +117,7 @@
                             <li><a class="dropdown-item" href="/signout">Sign out</a></li>
                         </ul>
                     </div>
+                    {% endif%}
                 </div>
             </div>
             <div class="header w-100">
@@ -129,8 +131,12 @@
                         </div>
                     </div>
                     <div class="col-md-4 d-flex justify-content-end">
-                            <a class="btn btn-outline-light rounded-pill" href="/login">Login</a>
-                            <a class="btn btn-light rounded-pill ms-2" href="/">Register</a>
+                        {% if not loged_user%}
+                        <a class="btn btn-outline-light rounded-pill" href="/login">Login</a>
+                        <a class="btn btn-light rounded-pill ms-2" href="/signup">Register</a>
+                        {% else %}
+                        <p></p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="container d-grid gap-3">

@@ -40,6 +40,9 @@
         width: 100%;
         aspect-ratio: 1/1;
     }
+    select option{
+        color: #0E0E0E;
+    }
 </style>
 </head>
 <body>      
@@ -128,8 +131,12 @@
                         </div>
                     </div>
                     <div class="col-md-4 d-flex justify-content-end">
-                            <a class="btn btn-outline-light rounded-pill" href="#">Login</a>
-                            <a class="btn btn-light rounded-pill ms-2" href="#">Register</a>
+                        {% if not user%}
+                        <a class="btn btn-outline-light rounded-pill" href="/login">Login</a>
+                        <a class="btn btn-light rounded-pill ms-2" href="/signup">Register</a>
+                        {% else %}
+                        <p></p>
+                        {% endif %}
                     </div>
                 </div>
     <div class="card w-50 mb-3 mx-auto mt-5 border-0">
