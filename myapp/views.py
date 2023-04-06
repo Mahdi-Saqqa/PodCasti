@@ -75,6 +75,7 @@ def loginaction(request):
 
 
 def addpodcast(request):
+    print(request.POST['genre'])
     if 'user_id' in request.session:
         if request.method == 'POST':
             loged_user = User.objects.get(id=request.session['user_id'])
@@ -84,7 +85,11 @@ def addpodcast(request):
                 podcast = mp3_form.save(commit=False)
                 podcast.description = request.POST['description']
                 podcast.added_by = loged_user
+
                 podcast.save()
+                cat=Genre.objects.filter(genre=request.POST['genre']).first()
+                
+                podcast.genre.add(cat)
                 return redirect('/')
         else:
             mp3_form = MP3UploadForm()
@@ -100,13 +105,10 @@ def player(request, podcast_id):
     if 'user_id' in request.session:
         loged_user = User.objects.get(id=request.session['user_id'])
         podcast = Podcast.objects.get(id=podcast_id)
-        print(Podcast.objects.get(id=podcast_id).file.url)
-        print(loged_user.liked_podcasts.all())
-        print(podcast)
-        print(loged_user)
         user=podcast.added_by
         favorites = loged_user.liked_podcasts.all()
         print(user)
+        print(loged_user)
         context={
             'podcast': podcast,
             'logged_user':loged_user,
@@ -190,8 +192,11 @@ def library(request):
             'podcasts':podcasts,
             'islogged':True,
             'favorites':favorites,
+            'loged_user':loged_user
 
         }
+        for i in Genre.objects.all():
+            print(i.genre)
         return render(request, 'library.html', context)
     else:
         return redirect('/')
@@ -237,3 +242,22 @@ def unlikepodcast(request,id):
     podcast = Podcast.objects.get(id=id)
     loged_user.liked_podcasts.remove(podcast)
     return redirect(request.META.get('HTTP_REFERER'))
+
+def deletepodcast(request,id):
+    podcast = Podcast.objects.get(id=id)
+    podcast.delete()
+    return redirect('/')    
+def genre(request,genre):
+    if 'user_id' in request.session:
+        loged_user = User.objects.get(id=request.session['user_id'])
+        cat=Genre.objects.get(genre=genre)
+        podcasts=cat.podcasts.all()
+        context ={
+            'podcasts':podcasts,
+            'islogged':True,
+            'loged_user':loged_user
+
+        }
+        return render(request, 'library.html', context)
+    else:
+        return redirect('/')

@@ -99,7 +99,7 @@
                                         <a href="/genre/education" class="nav-link px-0"> <span class="d-none d-sm-inline">Education</span></a>
                                     </li>
                                     <li>
-                                        <a href="genre/business" class="nav-link px-0"> <span class="d-none d-sm-inline">Business</span></a>
+                                        <a href="/genre/business" class="nav-link px-0"> <span class="d-none d-sm-inline">Business</span></a>
                                     </li>
                                     <li>
                                         <a href="/genre/culture" class="nav-link px-0"> <span class="d-none d-sm-inline">Culture</span></a>
@@ -186,21 +186,34 @@
                                 <div>
                                     <h1>{{podcast.title}}</h1>
                                     <p>{{podcast.description}}</p>
-                                    {% if podcast in favorites %}
-                                    <form action="/unlikepodcast/{{podcast.id}}"
-                                        method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn
-                                            btn-danger rounded-pill ms-2">UnLike</button>
-                                    </form>
-                                    {% else %}
-                                    <form action="/likepodcast/{{podcast.id}}"
-                                        method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn
-                                            btn-danger rounded-pill ms-2">Like</button>
-                                    </form>
-                                    {% endif %}
+                                    <div class="d-flex">
+                                        {% if podcast in favorites %}
+                                        <form action="/unlikepodcast/{{podcast.id}}"
+                                            method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn
+                                                btn-danger rounded-pill ms-2">UnLike</button>
+                                        </form>
+                                        {% else %}
+                                        <form action="/likepodcast/{{podcast.id}}"
+                                            method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn
+                                                btn-danger rounded-pill ms-2">Like</button>
+                                        </form>
+                                        {% endif %}
+
+                                        {% if user != loged_user %}
+                                        <form action="/deletepodcast/{{podcast.id}}"
+                                            method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn
+                                                btn-warning rounded-pill ms-2">Delete</button>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    
                                 </div>
                                 <div>
                                     <audio controls class="w-100">

@@ -19,5 +19,6 @@ urlpatterns = [
     path('updateaction',views.updateaction),
     path('likepodcast/<int:id>',views.likepodcast),
     path('unlikepodcast/<int:id>',views.unlikepodcast),
-
+    path('deletepodcast/<int:id>',views.deletepodcast),
+    path('genre/<str:genre>',views.genre)
 ]

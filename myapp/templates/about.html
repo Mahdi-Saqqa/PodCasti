@@ -111,21 +111,36 @@
                         </li>
                     </ul>
                     <hr>
+                    {% if islogged %}
                     <div class="dropdown pb-4">
-                        <a href="#" class="d-flex align-items-center text-black text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">loser</span>
+                        <a href="#" class="d-flex align-items-center
+                            text-black text-decoration-none
+                            dropdown-toggle" id="dropdownUser1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            
+                            {% if loged_user.picture %}
+                            <img src="{{loged_user.picture.url}}" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                            {% else %}
+                            <img src="{% static 'images/def_user.jpeg' %}" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                            {% endif %}
+                            <span class="d-none d-sm-inline mx-1">{{loged_user.first_name}}</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="/addpodcast">New</a></li>
+                        <ul class="dropdown-menu dropdown-menu-dark
+                            text-small shadow">
+                            <li><a class="dropdown-item"
+                                    href="/addpodcast">New</a></li>
                             <li><a class="dropdown-item" href="/update">Settings</a></li>
-                            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                            <li><a class="dropdown-item"
+                                    href="/profile">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="/signout">Sign out</a></li>
+                            <li><a class="dropdown-item"
+                                    href="/signout">Sign out</a></li>
                         </ul>
                     </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="header w-100">
