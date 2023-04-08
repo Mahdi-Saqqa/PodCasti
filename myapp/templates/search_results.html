@@ -16,9 +16,12 @@
             rel="stylesheet"
             integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
             crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
         <style>
         * {
-            color:white;
+            color:rgb(255, 255, 255);
         }
         body {
             background-color:  #0E0E0E;
@@ -111,7 +114,7 @@
                                                 class="d-none d-sm-inline">Education</span></a>
                                     </li>
                                     <li>
-                                        <a href="/genre/business" class="nav-link
+                                        <a href="genre/business" class="nav-link
                                             px-0"> <span class="d-none
                                                 d-sm-inline">Business</span></a>
                                     </li>
@@ -182,11 +185,12 @@
                                 <img class="logo" src="{% static 'images/podcasti2.png' %}" alt="PodCastilogo">
                             </div>
                             <div class="col-md-3 text-center">
-                                <div class="input-group">
-                                    <input class="form-control border-secondary
-                                        rounded-pill pr-5" type="search"
-                                        placeholder="Search">
-                                </div>
+
+                                    <form class="input-group">
+
+                                        <input  class="form-control border-secondary rounded-pill pr-5" type="text" id="podcast_search" name="podcast_search" placeholder="Search">
+                                    </form>
+
                             </div>
                             <div class="col-md-4 d-flex justify-content-end">
                                 {% if not islogged%}
@@ -200,171 +204,104 @@
                             </div>
                         </div>
                         {% if islogged %}
-                        <div class="container d-flex pr-5 mt-5 mb-5
-                            align-items-center">
-                            {% if user.picture %}
-                            <img src="{{user.picture.url}}" width="200"
-                                height="200" class="ms-5 rounded-circle"
-                                alt="...">
-                            {% else %}
-                            <img src="{% static 'images/def_user.jpeg' %}"
-                                width="200" height="200" class="ms-5
-                                rounded-circle" alt="...">
-                            {% endif %}
-                            <div class="d-flex flex-column align-items-center
-                                ms-5">
-                                <h1 class="h1 mt-3">{{user.user_name}} 
-                                    </h1>
-                                <div class="d-flex text-warning">
-                                    <p class="text-warning me-2">{{following_number}}
-                                        following </p>|<p class="text-warning
-                                        ms-2"> {{followers_number}} followers</p>
-                                </div>
-                                <div class="d-flex text-warning">
-                                    {% if loged_user.id is not user.id %}
-                                        {% if user not in loged_user.following.all  %}
-                                        <p><a  class="btn btn-success rounded-pill ms-2 " href="/follow/{{user.id}}">Follow</a></p>
+                            {% if podcasts %}
+                            {% for podcast in podcasts%}
+                            <div class="container w-100 mx-5 mt-3">
+                                <div class="row w-50 p-4 d-flex rounded-4
+                                    justify-content-between" id="player">
+                                    <div class="col-md-4">
+                                        {% if podcast.cover.url %}
+                                        <a href="/podcast/{{ podcast.id }}/">
+                                            <img src="{{ podcast.cover.url }}"
+                                                class="same-size rounded"></a>
                                         {% else %}
-                                        <p><a  class="btn btn-warning rounded-pill ms-2 " href="/unfollow/{{user.id}}">Unfollow</a></p>
-
+                                        <a href="/podcast/{{ podcast.id }}/">
+                                            <img src="{{ podcast.cover.url }}"
+                                                class="same-size rounded"></a>
                                         {% endif %}
-                                    {% endif %}
+                                    </div>
+                                    <div class="col-md-8 d-flex flex-column
+                                        justify-content-between">
+                                        <div>
+                                            <h5>{{podcast.title}}</h5>
+                                            <p>{{podcast.description}}</p>
+                                            {% if podcast in favorites%}
+                                            <form action="/unlikepodcast/{{podcast.id}}"
+                                                method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn
+                                                    btn-danger rounded-pill ms-2">UnLike</button>
+                                            </form>
+                                            {% else %}
+                                            <form action="/likepodcast/{{podcast.id}}"
+                                                method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn
+                                                    btn-danger rounded-pill ms-2">Like</button>
+                                            </form>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            <audio controls class="w-100">
+                                                <source src="{{ podcast.file.url }}"
+                                                    type="audio/mpeg">
+                                            </audio>
+                                        </div>
+    
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        {% else %}
-                        <h1 class="h1 ms-5 mt-5">Please Log in to access the Platform</h1>
-                        {% endif %}
-                        {% for podcast in podcasts%}
-                        <div class="container w-100 mx-5 mt-3">
-                            <div class="row w-50 p-4 d-flex rounded-4
-                                justify-content-between" id="player">
-                                <div class="col-md-4">
-                                    {% if podcast.cover.url %}
-                                    <a href="/podcast/{{ podcast.id }}/">
-                                        <img src="{{ podcast.cover.url }}"
-                                            class="same-size rounded"></a>
-                                    {% else %}
-                                    <a href="/podcast/{{ podcast.id }}/">
-                                        <img src="{{ podcast.cover.url }}"
-                                            class="same-size rounded"></a>
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-8 d-flex flex-column
-                                    justify-content-between">
-                                    <div>
-                                        <h5>{{podcast.title}}</h5>
-                                        <p>{{podcast.description}}</p>
-                                        <form action="/deletepodcast/{{podcast.id}}"
-                                        method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn
-                                            btn-warning rounded-pill ms-2">Delete</button>
-                                    </form>
-                                    </div>
-                                    <div>
-                                        <audio controls class="w-100">
-                                            <source src="{{ podcast.file.url }}"
-                                                type="audio/mpeg">
-                                        </audio>
-                                    </div>
+                            {% endfor %}
+                            {% else %}
+                            <h1 class="h1 ms-5 mt-5">Nothing to show
+                            </h1>
 
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
+                            {% endif %}
+                        {% else %}
+                        <h1 class="h1 ms-5 mt-5">Please Login to access the Platform</h1>
+                        {% endif %}
+                        
+
                     </div>
-                    {% comment %} <div class="container d-grid gap-3">
-                        <div class="col py-3">
-                            <div class="container ms-">
-                                <div class="row">
-                                    <div class="card mx-4 m-3 p-0 profile-card"
-                                        style="width: 15rem;">
-                                        <img src="{% static
-                                            'images/ben-shapiro.jpeg' %}"
-                                            class="card-img-top img-fluid
-                                            same-size w-75 rounded-circle
-                                            mx-auto" alt="...">
-                                        <div class="card-body border-bottom-0">
-                                            <h6 class="card-title">The Ben
-                                                Shapiro Show</h6>
-                                            <p class="card-text text-secondary">Profile</p>
-                                        </div>
-                                        <div class="card-footer p-0 d-grid gap-2
-                                            border-0">
-                                            <a href="#" class="btn btn-warning
-                                                rounded-bottom rounded-0">Follow</a>
-                                        </div>
-                                    </div>
-                                    <div class="card mx-4 m-3 p-0 profile-card"
-                                        style="width: 15rem;">
-                                        <img src="{% static
-                                            'images/ben-shapiro.jpeg' %}"
-                                            class="card-img-top img-fluid
-                                            same-size w-75 rounded-circle
-                                            mx-auto" alt="...">
-                                        <div class="card-body border-bottom-0">
-                                            <h6 class="card-title">The Ben
-                                                Shapiro Show</h6>
-                                            <p class="card-text text-secondary">Profile</p>
-                                        </div>
-                                        <div class="card-footer p-0 d-grid gap-2
-                                            border-0">
-                                            <a href="#" class="btn btn-danger
-                                                rounded-bottom rounded-0">Unfollow</a>
-                                        </div>
-                                    </div>
-                                    <div class="card mx-4 m-3 p-0 profile-card"
-                                        style="width: 15rem;">
-                                        <img src="{% static
-                                            'images/ben-shapiro.jpeg' %}"
-                                            class="card-img-top img-fluid
-                                            same-size w-75 rounded-circle
-                                            mx-auto" alt="...">
-                                        <div class="card-body border-bottom-0">
-                                            <h6 class="card-title">The Ben
-                                                Shapiro Show</h6>
-                                            <p class="card-text text-secondary">Profile</p>
-                                        </div>
-                                        <div class="card-footer p-0 d-grid gap-2
-                                            border-0">
-                                            <a href="#" class="btn btn-success
-                                                rounded-bottom rounded-0">Follow</a>
-                                        </div>
-                                    </div>
-                                    <div class="card mx-4 m-3 p-0 profile-card"
-                                        style="width: 15rem;">
-                                        <img src="{% static
-                                            'images/ben-shapiro.jpeg' %}"
-                                            class="card-img-top img-fluid
-                                            same-size w-75 rounded-circle
-                                            mx-auto" alt="...">
-                                        <div class="card-body border-bottom-0">
-                                            <h6 class="card-title">The Ben
-                                                Shapiro Show</h6>
-                                            <p class="card-text text-secondary">Profile</p>
-                                        </div>
-                                        <div class="card-footer p-0 d-grid gap-2
-                                            border-0">
-                                            <a href="#" class="btn btn-primary
-                                                rounded-bottom rounded-0">Follow</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> {% endcomment %}
                 </div>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+        <script>$(document).ready(function() {
+            // Autocomplete initialization code
+            $('#podcast_search').autocomplete({
+              source: '/podcast_autocomplete/',
+              minLength: 2,
+              select: function(event, ui) {
+                $('#podcast_search').val(ui.item.value);
+                searchPodcasts(ui.item.value); // Call the search method with the selected value
+                return false;
+              }
+            });
+          
+            // Search method to fetch and display the search results
+            function searchPodcasts(query) {
+              $.ajax({
+                url: '/search_podcasts/', // URL of the search view
+                data: { 'query': query }, // Data to be sent with the AJAX request
+                success: function(data) {
+                  $('#search_results').html(data); // Display the search results in a div with ID 'search_results'
+                }
+              });
+            }
+          });
+</script>
+
         <script
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
             crossorigin="anonymous"></script>
-    </body>
+    
+        </body>
+
+
+
 </html>

@@ -4,7 +4,9 @@ from django.contrib import messages
 from myapp.models import *
 from myapp.forms import *
 import bcrypt
+from django.views.decorators.csrf import csrf_exempt
 
+from django.http import JsonResponse
 
 def index(request):
     if 'user_id' in request.session:
@@ -277,15 +279,42 @@ def genre(request, genre):
         return redirect('/')
 
 
-def follow(request, id):
+def podcast_autocomplete(request):
+    term = request.GET.get('term')
+    podcasts = Podcast.objects.filter(title__icontains=term)[:10]
+    results = []
+    for podcast in podcasts:
+        podcast_json = {}
+        podcast_json['id'] = podcast.id
+        podcast_json['label'] = podcast.title
+        podcast_json['value'] = podcast.title
+        results.append(podcast_json)
+    return JsonResponse(results, safe=False)
+
+
+
+def follow(request,id):
     loged_user = User.objects.get(id=request.session['user_id'])
     user = User.objects.get(id=id)
     loged_user.following.add(user)
     return redirect(request.META.get('HTTP_REFERER'))
 
-
-def unfollow(request, id):
+def unfollow(request,id):
     loged_user = User.objects.get(id=request.session['user_id'])
     user = User.objects.get(id=id)
     loged_user.following.remove(user)
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+def search_podcasts(request):
+    
+    if 'user_id' in request.session:
+        loged_user = User.objects.get(id=request.session['user_id'])
+        query = request.GET.get('query')
+        podcasts = Podcast.objects.filter(title__icontains=query)
+        context ={
+            'podcasts':podcasts,
+            'islogged':True,
+            'loged_user':loged_user
+        }
+    return render(request, 'search_results.html', context)

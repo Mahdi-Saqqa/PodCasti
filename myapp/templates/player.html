@@ -203,7 +203,7 @@
                                         </form>
                                         {% endif %}
 
-                                        {% if user != loged_user %}
+                                        {% if podcast.added_by is loged_user %}
                                         <form action="/deletepodcast/{{podcast.id}}"
                                             method="post">
                                             {% csrf_token %}

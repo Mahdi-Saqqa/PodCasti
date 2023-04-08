@@ -20,7 +20,9 @@ urlpatterns = [
     path('likepodcast/<int:id>', views.likepodcast),
     path('unlikepodcast/<int:id>', views.unlikepodcast),
     path('deletepodcast/<int:id>', views.deletepodcast),
-    path('genre/<str:genre>', views.genre),
-    path('follow/<int:id>', views.follow),
-    path('unfollow/<int:id>', views.unfollow),
+    path('genre/<str:genre>',views.genre),
+    path('podcast_autocomplete/', views.podcast_autocomplete, name='podcast_autocomplete'),
+    path('follow/<int:id>',views.follow),
+    path('unfollow/<int:id>',views.unfollow),
+    path('search_podcasts/', views.search_podcasts, name='search_podcasts'),
 ]
