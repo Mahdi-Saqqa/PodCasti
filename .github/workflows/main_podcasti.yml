@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'PodCasti'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_60CB3C713FCE4A798B0E3C76E0CC7579 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B3B14103512D4A41897B2552FDE21D8A }}
