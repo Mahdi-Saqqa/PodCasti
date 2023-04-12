@@ -26,7 +26,7 @@ SECRET_KEY = 'rea9w0y*rlonii-p7@m(+)82web56$$^xx3@x5d%=dge)*-syb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['podcasti.azurewebsites.net']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
