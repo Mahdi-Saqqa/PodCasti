@@ -74,7 +74,6 @@ def loginaction(request):
         messages.error(request, "Email not found in the database")
         return redirect('/login')
 
-
 def addpodcast(request):
     if 'user_id' in request.session:
         if request.method == 'POST':

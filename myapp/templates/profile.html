@@ -255,12 +255,16 @@
                                     <div>
                                         <h5>{{podcast.title}}</h5>
                                         <p>{{podcast.description}}</p>
-                                        <form action="/deletepodcast/{{podcast.id}}"
-                                        method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn
-                                            btn-warning rounded-pill ms-2">Delete</button>
-                                    </form>
+                                    
+                                    {% if loged_user == podcast.added_by %}
+                                    
+                                    <form action="/deletepodcast/{{podcast.id}}"
+                                    method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn
+                                        btn-warning rounded-pill ms-2">Delete</button>
+                                </form>
+                                    {% endif %}
                                     </div>
                                     <div>
                                         <audio controls class="w-100">
