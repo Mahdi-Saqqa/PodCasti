@@ -130,3 +130,7 @@ FILE_UPLOAD_HANDLERS = [
     "django.core.files.uploadhandler.MemoryFileUploadHandler",
     "django.core.files.uploadhandler.TemporaryFileUploadHandler",
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://podcasti.azurewebsites.net',
+]
